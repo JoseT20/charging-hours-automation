@@ -23,19 +23,26 @@ def write_comment(charge_number, date):
             if str(cell.value) == date:
                 c = cell.column
 
-    message = ''
+    message = []
     for name, hours in dict[charge_number].items():
-        message += f'{name} ({hours})\n'
+        message.append(f'{name} ({hours})')
+    message = '\n'.join(message)
     sheet.cell(row = r, column = c).comment = Comment(message, 'Jose')
     wb.save('Total_hours.xlsx')
 
-charge_numbers = ['N123', 'N456', 'N789']
-df = pd.read_excel('Charging_.xlsx')
-dict = {}
+if __name__ == '__main__':
+    print(f'Enter Charge Number: ')
+    charge_number = input('>')
+    print(f"Enter Date in the following format: 'YYYY-MM-DD 00:00:00'")
+    date = input('>')
+    
+    charge_numbers = ['N123', 'N456', 'N789']
+    df = pd.read_excel('Charging_.xlsx')
+    dict = {}
 
-for cn in charge_numbers:
-    dict = filter_data(charge_number=cn)
-    # Date format: 'YYYY-MM-DD 00:00:00'
-    write_comment(charge_number=cn, date='2024-05-03 00:00:00')
+    for cn in charge_numbers:
+        dict = filter_data(charge_number=cn)
+        # Date format: 'YYYY-MM-DD 00:00:00'
+        write_comment(charge_number=cn, date=date)
 
     
