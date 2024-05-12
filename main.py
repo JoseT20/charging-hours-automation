@@ -12,7 +12,7 @@ def filter_data(charge_number):
             dict[charge_number][row['Name']] = int(row['Hours'])
     return dict
 
-def write_comment(charge_number, date):
+def write_comment(dictionary, charge_number, date):
     wb = load_workbook('Total_hours.xlsx')
     sheet = wb.active
 
@@ -24,7 +24,7 @@ def write_comment(charge_number, date):
                 c = cell.column
 
     message = []
-    for name, hours in dict[charge_number].items():
+    for name, hours in dictionary[charge_number].items():
         message.append(f'{name} ({hours})')
     message = '\n'.join(message)
     sheet.cell(row = r, column = c).comment = Comment(message, 'Jose')
@@ -43,6 +43,6 @@ if __name__ == '__main__':
     for cn in charge_numbers:
         dict = filter_data(charge_number=cn)
         # Date format: 'YYYY-MM-DD 00:00:00'
-        write_comment(charge_number=cn, date=date)
+        write_comment(dictionary=dict, charge_number=cn, date=date)
 
     
